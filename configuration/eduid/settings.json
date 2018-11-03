@@ -1,0 +1,85 @@
+{
+  "integrity-keys": "/etc/oidc/integrity.jwks",
+  "certificates": "/etc/oidc/certificates.jwks",
+  "connections": "/etc/oidc/connections.json",
+  "pairwiseSalt": "/etc/oidc/pairwise_salt",
+  "urls": {
+      "issuer": "https://eduid.htwchur.ch/oidc",
+      "interaction": "https://eduid.htwchur.ch/oidc/interaction/",
+      "homepage": "https://eduid.htwchur.ch"
+  },
+  "features": {
+      "logging": true,
+      "devInteractions": false,
+      "claimsParameter": true,
+      "clientCredentials": true,
+      "encryption": true,
+      "introspection": true,
+      "registration": false,
+      "registrationManagement": false,
+      "request": true,
+      "requestUri": true,
+      "revocation": true,
+      "sessionManagement": true,
+      "backchannelLogout": true,
+      "discovery": true,
+      "alwaysIssueRefresh": false,
+      "oauthNativeApps": false,
+      "pkce": true,
+      "jwtassertion": true,
+      "jwtProxyAuthentication": true,
+      "jwtProxyAuthorization": true
+  },
+  "adapters": {
+    "Session": {
+      "source": "redis"
+    },
+    "AccessToken": {
+      "source": "redis"
+    },
+    "AuthorizationCode": {
+      "source": "redis"
+    },
+    "RefreshToken": {
+      "source": "redis"
+    },
+    "InitialAccessToken": {
+      "source": "redis"
+    },
+    "RegistrationAccessToken": {
+      "source": "redis"
+    },
+    "ClientCredentials": {
+      "source": "ldap",
+      "id": "oauthClientID",
+      "base": "ou=federation,dc=eduid,dc=ch",
+      "mapping": "/etc/oidc/client-mapping.json"
+    },
+    "Client": {
+      "source": "ldap",
+      "id": "oauthClientID",
+      "base": "ou=federation,dc=eduid,dc=ch",
+      "mapping": "/etc/oidc/client-mapping.json"
+    },
+    "ProxyClient": {
+      "source": "ldap",
+      "id": "oauthClientID",
+      "base": "ou=proxy,ou=federation,dc=eduid,dc=ch",
+      "mapping": "/etc/oidc/client-mapping.json",
+      "upsert": {
+          "class": ["oauthClientIdentity", "oauthClientMetadata", "top"]
+      }
+    },
+    "Account": {
+      "source": "ldap",
+      "bind": "mail",
+      "id": "swissEduID",
+      "base": "ou=accounts,dc=eduid,dc=ch",
+      "mapping": "/etc/oidc/user-mapping.json"
+    },
+    "Interaction": {
+      "comment": "normally this is in memory only",
+      "source": "redis"
+    }
+  }
+}

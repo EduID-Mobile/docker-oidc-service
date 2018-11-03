@@ -1,0 +1,26 @@
+{
+    "ldapserver": {
+        "type": "ldap",
+        "url": "ldapuri",
+        "bind": "binddn",
+        "password": "password for binddn"
+    },
+    "redisserver": {
+        "type": "redis",
+        "url": "redisuri",
+        "prefix": "key-prefix",
+        "user": "redisuser",
+        "password": "redispassword",
+        "database": "redisdatabase"
+    },
+    "mongoserver": {
+        "type": "mongodb",
+        "url": "mongouri",
+        "user": "mongouser",
+        "password": "mongopassword",
+        "database": "collection name"
+    },
+    "memoryadapter": {
+        "type": "memory"
+    }
+}

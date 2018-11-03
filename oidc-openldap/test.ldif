@@ -1,0 +1,10 @@
+dn: olcDatabase={1}mdb
+changetype: modify
+replace: olcSuffix
+olcSuffix: dc=eduid,dc=ch
+--
+replace: olcRootDN
+olcRootDN: cn=admin,dc=eduid,dc=ch
+--
+replace: olcRootPW
+olcRootPW: foobar
