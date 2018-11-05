@@ -1,0 +1,52 @@
+version: "3"
+services:
+  ldap:
+    image: eduid/ldapcore:latest
+    ports:
+      - 389:389
+    networks:
+      - oidccluster
+    volumes:
+      - ldapdata:/var/lib/openldap/openldap-data
+
+  redis:
+    image: redis:latest
+
+  oidc:
+    image: eduid/oidc-provider:latest
+    ports:
+      - 3000:3000
+    networks:
+      - oidccluster
+    configs:
+      - source: integrity.jwks
+        target: /etc/oidc/integrity.jwks
+      - source: certificates.jwks
+        target: /etc/oidc/certificates.jwks
+      - source: settings.json
+        target: /etc/oidc/settings.json
+      - source: connections.json
+        target: /etc/oidc/connections.json
+      - source: pairwise_salt
+        target: /etc/oidc/pairwise_salt
+
+networks:
+  oidccluster:
+    driver: overlay
+
+volumes:
+  ldapdata:
+    external:
+      name: ldapdata
+
+configs:
+  integrity.jwks:
+    external: true
+  certificates.jwks:
+    external: true
+  settings.json:
+    external: true
+  pairwise_salt:
+    external: true
+  connections.json:
+    external: true
