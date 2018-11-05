@@ -1,0 +1,39 @@
+{
+  "connections": {},
+  "adapters": {
+    "Session": {
+      "source": "memory"
+    },
+    "AccessToken": {
+      "source": "memory"
+    },
+    "AuthorizationCode": {
+      "source": "memory"
+    },
+    "RefreshToken": {
+      "source": "memory"
+    },
+    "InitialAccessToken": {
+      "source": "memory"
+    },
+    "RegistrationAccessToken": {
+      "source": "memory"
+    },
+    "ClientCredentials": {
+      "source": "memory"
+    },
+    "Client": {
+      "source": "memory"
+    },
+    "ProxyClient": {
+      "source": "memory"
+    },
+    "Account": {
+      "source": "memory"
+    },
+    "Interaction": {
+      "comment": "normally this is in memory only",
+      "source": "memory"
+    }
+  }
+}

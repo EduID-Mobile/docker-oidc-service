@@ -14,7 +14,9 @@ WORKDIR /oidc-provider
 
 RUN chown -R node /oidc-provider
 USER node
-RUN npm install eduid-mobile/ldap-oidc-provider#v3 --prefix /oidc-provider --global --production
+
+# change the echo parameter to rebuild the container
+RUN npm install eduid-mobile/ldap-oidc-provider#v3 --prefix /oidc-provider --global --production && echo "4"
 
 FROM node:alpine
 
@@ -30,8 +32,15 @@ WORKDIR /oidc-provider
 # get the node modules
 COPY --from=builder /oidc-provider .
 
+# add some meaningful defaults
+COPY certificates.jwks /etc/oidc
+COPY integrity.jwks /etc/oidc
+COPY pairwise_salt /etc/oidc
+COPY settings.json /etc/oidc
+
 # copy the templates into the volume
 RUN chown -R node /etc/oidc /template /oidc-provider
+
 USER node
 
 # the internal default port
