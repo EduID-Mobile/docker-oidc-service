@@ -11,6 +11,9 @@ WORKDIR /oidc-provider
 # case for docker containers.
 
 # load dependencies for production only
+
+RUN chown -R node /oidc-provider
+USER node
 RUN npm install eduid-mobile/ldap-oidc-provider#v3 --prefix /oidc-provider --global --production
 
 FROM node:alpine
@@ -28,6 +31,8 @@ WORKDIR /oidc-provider
 COPY --from=builder /oidc-provider .
 
 # copy the templates into the volume
+RUN chown -R node /etc/oidc /template /oidc-provider
+USER node
 
 # the internal default port
 # NOTE: the exposed port MUST be linked to a SSL termination!
