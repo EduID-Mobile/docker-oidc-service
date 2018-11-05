@@ -1,7 +1,7 @@
 version: "3"
 services:
   ldap:
-    image: eduid/ldapcore:latest
+    image: eduid/ldapcore
     ports:
       - 389:389
     networks:
@@ -10,12 +10,12 @@ services:
       - ldapdata:/var/lib/openldap/openldap-data
 
   redis:
-    image: redis:latest
+    image: redis
     networks:
       - oidccluster
 
   oidc:
-    image: eduid/oidc-provider:latest
+    image: eduid/oidc-provider
     ports:
       - 3000:3000
     networks:
