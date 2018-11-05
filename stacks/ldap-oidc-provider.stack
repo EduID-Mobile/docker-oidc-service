@@ -11,6 +11,8 @@ services:
 
   redis:
     image: redis:latest
+    networks:
+      - oidccluster
 
   oidc:
     image: eduid/oidc-provider:latest
