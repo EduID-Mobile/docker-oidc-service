@@ -1,0 +1,28 @@
+dn: dc=eduid,dc=io
+objectClass: dcObject
+objectClass: organization
+objectClass: top
+dc: eduid
+o: eduid.io
+
+dn: cn=admin,dc=eduid,dc=io
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: admin
+userPassword: {SSHA}T9LyPpFTMtqkz56jh6dFS3mnCrx4yvfe
+description: LDAP administrator
+
+## Changes to
+# dn: %LDAPBASEDN%
+# objectClass: dcObject
+# objectClass: organization
+# objectClass: top
+# dc: %LDAPBASEDC%
+# o: %LDAPBASEORG%
+
+# dn: cn=%LDAPROOTUSER%,%LDAPBASEDN%
+# objectClass: organizationalRole
+# objectClass: simpleSecurityObject
+# cn: %LDAPROOTUSER%
+# userPassword: %LDAPROOTPW%
+# description: LDAP administrator

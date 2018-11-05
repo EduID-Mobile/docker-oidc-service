@@ -9,6 +9,7 @@ RUN apk add --no-cache openldap openldap-backend-all openldap-overlay-all openld
 ADD schema /install/schema
 ADD slapd.conf.default /etc/openldap/slapd.conf
 ADD entrypoint.sh /install/
+ADD directory.root.ldif /install/
 
 RUN chmod 755 /install/entrypoint.sh
 
@@ -34,6 +35,9 @@ RUN slapadd -n 0 -l  /install/schema/cosine.ldif -f /etc/openldap/slapd.conf -F 
  slapadd -n 0 -l /install/schema/oidc-client.openldap.ldif && \
  slapadd -n 0 -l  /install/schema/oidc-session.openldap.ldif && \
  slapadd -n 0 -l  /install/schema/oidc-token.openldap.ldif
+
+# Install the basic directory structure.
+RUN slapadd -n 1 -l /install/directory.root.ldif
 
 EXPOSE 389 636
 

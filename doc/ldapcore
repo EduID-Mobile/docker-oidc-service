@@ -1,0 +1,31 @@
+## LDAP Core
+
+The LDAP Core container is a container used for testing purposes.
+
+It is based on the alpine:latest image and comes with openldap with all backends
+and overlays preinstalled.
+
+This container is NOT designed for production purposes (yet).
+
+The directory is empty and configured for basic use.
+
+### Getting Started
+
+Launch the container as following:
+
+```
+> docker run -d eduid/ldapcore -p 389:389
+```
+
+This will create a volume for your container that contains the directory DB.
+
+The directory comes barebones only with an admin account and no overlays are
+activated.
+
+Now you can connect to the directory using the following data:
+
+BaseDN: dc=eduid,dc=io
+RootDN: cn=admin,dc=eduid,dc=io
+RootPW: secret
+
+### Build Instructions
