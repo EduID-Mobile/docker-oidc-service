@@ -5,18 +5,29 @@ ulimit -n 8000
 #  /etc/openldap/slapd.d/cn=config | grep mdb > /dev/null
 # if [ "$?" != "0" ]
 #then
-    if [ -z $LDAP_DOMAIN ]
-    then
-        LDAP_DOMAIN=eduid.io
-    fi
-
-    ROOT_DN=`echo $LDAP_DOMAIN | sed -E 's/([^\.]*)/dc=\1/g' | tr . ,`
 
 # If a fresh container with empty volumes arrives, set up the domain
 if [ ! -f /data/data.mdb ]
 then
     echo "RootDomain is not configured"
     echo "init DB"
+
+    if [ -f /install/init.conf ]
+    then
+        . /install/init.conf
+    fi
+
+    if [ -f /install/password ]
+    then
+        LDAP_PASSWORD=`cat /install/password`
+    fi
+
+    if [ -z $LDAP_DOMAIN ]
+    then
+        LDAP_DOMAIN=eduid.io
+    fi
+
+    ROOT_DN=`echo $LDAP_DOMAIN | sed -E 's/([^\.]*)/dc=\1/g' | tr . ,`
 
     # create backend definition
     # $ROOT_DN
@@ -26,7 +37,6 @@ then
         LDAP_ADMIN=admin
     fi
 
-    # $ROOT_DN_PASSWORD
     if [ -z $LDAP_PASSWORD ]
     then
         LDAP_PASSWORD=secret
