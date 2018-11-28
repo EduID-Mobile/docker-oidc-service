@@ -5,12 +5,12 @@ ulimit -n 8000
 #  /etc/openldap/slapd.d/cn=config | grep mdb > /dev/null
 # if [ "$?" != "0" ]
 #then
-    if [ -z $ROOT_DOMAIN ]
+    if [ -z $LDAP_DOMAIN ]
     then
-        ROOT_DOMAIN=eduid.io
+        LDAP_DOMAIN=eduid.io
     fi
 
-    ROOT_DN=`echo $ROOT_DOMAIN | sed -E 's/([^\.]*)/dc=\1/g' | tr . ,`
+    ROOT_DN=`echo $LDAP_DOMAIN | sed -E 's/([^\.]*)/dc=\1/g' | tr . ,`
 
 # If a fresh container with empty volumes arrives, set up the domain
 if [ ! -f /data/data.mdb ]
@@ -21,15 +21,15 @@ then
     # create backend definition
     # $ROOT_DN
     # $ROOT_DN_USER
-    if [ -z $ROOT_DN_USER ]
+    if [ -z $LDAP_ADMIN ]
     then
-        ROOT_DN_USER=admin
+        LDAP_ADMIN=admin
     fi
 
     # $ROOT_DN_PASSWORD
-    if [ -z $ROOT_DN_PASSWORD ]
+    if [ -z $LDAP_PASSWORD ]
     then
-        ROOT_DN_PASSWORD=secret
+        LDAP_PASSWORD=secret
     fi
     # ROOT_DN_PASSWORD=`slappasswd -s $ROOT_DN_PASSWORD`
 
@@ -42,10 +42,10 @@ then
     # BACKEND="database mdb\n maxsize 1073741824\n suffix \"$ROOT_DN\"\n rootdn \"cn=$ROOT_DN_USER,$ROOT_DN\"\n rootpw $ROOT_DN_PASSWORD\n directory /var/lib/openldap/openldap-data\n index mail,uid,mailAlias,cn,sn eq,sub\n index objectClass eq"
 
 
-    BACKEND="olcSuffix: $ROOT_DN\\nolcRootDN: cn=$ROOT_DN_USER,$ROOT_DN\\nolcRootPW: $ROOT_DN_PASSWORD"
+    BACKEND="olcSuffix: $ROOT_DN\\nolcRootDN: cn=$LDAP_ADMIN,$ROOT_DN\\nolcRootPW: $LDAP_PASSWORD"
     FULLBACKEND=`slapcat -n 0 | sed -e "/olcDatabase:.*mdb/a $BACKEND"`
 
-    ROOTENTRY="dn: $ROOT_DN\\nobjectClass: dcObject\\nobjectClass: organization\\nobjectClass: top\\ndc: $ROOT_DN_DC\\no: $ROOT_DN_ORG\\n\\ndn: cn=$ROOT_DN_USER,$ROOT_DN\\nobjectClass: organizationalRole\\nobjectClass: simpleSecurityObject\\ndescription: LDAP administrator\\ncn: $ROOT_DN_USER\\nuserPassword: $ROOT_DN_PASSWORD\\n"
+    ROOTENTRY="dn: $ROOT_DN\\nobjectClass: dcObject\\nobjectClass: organization\\nobjectClass: top\\ndc: $ROOT_DN_DC\\no: $ROOT_DN_ORG\\n\\ndn: cn=$LDAP_ADMIN,$ROOT_DN\\nobjectClass: organizationalRole\\nobjectClass: simpleSecurityObject\\ndescription: LDAP administrator\\ncn: $LDAP_ADMIN\\nuserPassword: $LDAP_PASSWORD\\n"
 
     # echo "$FULLBACKEND"
     # echo -e $BACKEND
