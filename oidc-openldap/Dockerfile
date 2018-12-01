@@ -2,7 +2,12 @@ FROM alpine
 
 ## install the latest openldap tools
 
-RUN apk add --no-cache openldap openldap-backend-all openldap-overlay-all openldap-clients openldap-passwd-pbkdf2 bash && \
+RUN apk add --no-cache openldap \
+                       openldap-backend-all \
+                       openldap-overlay-all \
+                       openldap-clients \
+                       openldap-passwd-pbkdf2 \
+                       bash && \
     mkdir -p /install /run/openldap /var/lib/openldap/openldap-data /etc/openldap/slapd.d && \
     chown -R ldap:ldap /run/openldap /var/lib/openldap/openldap-data /etc/openldap/slapd.d
 
