@@ -13,15 +13,18 @@ WORKDIR /oidc-provider
 # load dependencies for production only
 
 RUN chown -R node /oidc-provider
+
 USER node
 
 # change the echo parameter to rebuild the container
-RUN npm install eduid-mobile/ldap-oidc-provider#v3 --prefix /oidc-provider --global --production && echo "4"
+RUN npm init -y && \
+    npm install eduid-mobile/ldap-oidc-provider#v3 --production --loglevel=error"
 
+# Init the final package
 FROM node:alpine
 
 ENV NODE_PATH /oidc-provider
-ENV PATH /oidc-provider/bin:$PATH
+ENV PATH /oidc-provider/node_modules/.bin:$PATH
 
 # create configuration directory
 RUN mkdir -p /etc/oidc /template
