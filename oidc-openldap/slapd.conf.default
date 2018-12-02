@@ -48,24 +48,28 @@ moduleload	back_mdb.so
 #
 # rootdn can always read and write EVERYTHING!
 
+# database config
+# rootpw   config
+
 #######################################################################
 # MDB database definitions
 #######################################################################
 
 database	mdb
 maxsize		1073741824
-suffix		"dc=eduid,dc=io"
-rootdn		"cn=admin,dc=eduid,dc=io"
+# suffix		"dc=eduid,dc=io"
+# rootdn		"cn=admin,dc=eduid,dc=io"
 
 # Cleartext passwords, especially for the rootdn, should
 # be avoid.  See slappasswd(8) and slapd.conf(5) for details.
 # Use of strong authentication encouraged.
-rootpw		secret
+# rootpw		secret
 
 # The database directory MUST exist prior to running slapd AND
 # should only be accessible by the slapd and slap tools.
 # Mode 700 recommended.
-directory	/var/lib/openldap/openldap-data
+directory	/data
 
 # Indices to maintain
+index	mail,uid,cn,sn	eq,sub
 index	objectClass	eq
