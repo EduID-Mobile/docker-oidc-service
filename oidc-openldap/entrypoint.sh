@@ -75,5 +75,5 @@ then
     echo "URI ldapi://%2fvar%2frun%2fopenldap%2fsocket" >> /etc/openldap/ldap.conf
 fi
 
-/usr/sbin/slapd -d stats -h ldap:/// -h ldapi://%2fvar%2frun%2fopenldap%2fsocket -u ldap -g ldap
+/usr/sbin/slapd -d stats -h "ldap:/// ldapi://%2fvar%2frun%2fopenldap%2fsocket" -u ldap -g ldap
 # exec /bin/ash
