@@ -32,6 +32,7 @@ RUN slapadd -n 0 -l  /install/schema/cosine.ldif -f /etc/openldap/slapd.conf -F 
     slapadd -n 0 -l  /install/schema/nis.ldif && \
     slapadd -n 0 -l  /install/schema/inetorgperson.ldif && \
     slapadd -n 0 -l  /install/schema/ppolicy.ldif && \
+    slapadd -n 0 -l  /install/schema/qmail.ldif && \
 # EduID Schema
     slapadd -n 0 -l  /install/schema/eduperson-201602.openldap.ldif && \
     slapadd -n 0 -l  /install/schema/swissedu-201706.openldap.ldif && \
